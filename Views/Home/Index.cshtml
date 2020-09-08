@@ -1,0 +1,74 @@
+﻿@model Attendance.Models.Resume
+
+
+@{
+    ViewData["Title"] = "Home Page";
+
+}
+
+
+<div class="text-center">
+    <h1 class="display-4 font-weight-bold">Welcome back to the office!</h1>
+    <h4 class="text-center">Please select your name and stamp your resumption time</h4>
+
+    <form  method="post">
+        <div class="row">
+            <div class="col-sm-12 my-2">
+                <div class="py-2 text-center bg-dark">
+                    <h1 class="timer text-light display-1 font-weight-bold"></h1>
+                    <input class="dateAndTime form-control" hidden="hidden" asp-for="ResumedAt" />
+                </div>
+            </div>
+            <div class="col-sm-12 my-2">
+                <select id="select" asp-for="StaffID" class="form-control-lg custom-select selectbox">
+                    <option selected disabled value="null">-- select your name --</option>
+                    @if (ViewBag.Staff != null)
+                    {
+                        @foreach (Staff name in ViewBag.Staff)
+                        {
+                            <option class="dropdown" value="@name.FirstName @name.LastName">@name.FirstName @name.LastName</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-sm-12 my-2">
+                <button id="submitBtn" asp-controller="HandleForm" asp-action="Index" class="btn btn-block btn-success btn-lg font-weight-bold" type="submit">Stamp</button>
+            </div>
+        </div>
+
+    </form>
+
+    <br />
+    <br />
+    <br />
+
+    <table class="table-borderless table table-hover table table-striped table-responsive-sm">
+        <thead class="bg-danger text-light">
+            <tr>
+                <th>Staff</th>
+                <th>Time</th>
+            </tr>
+        </thead>
+        <tbody class="font-weight-bold">
+           @if(ViewBag.Stamp != null)
+           {
+               @foreach(var item in ViewBag.Stamp)
+               {
+                   <tr>
+                       <td>@item.StaffID</td>
+                       <td>@item.ResumedAt</td>
+                   </tr>
+               }
+           }
+        </tbody>
+    </table>
+
+    <br />
+    <br />
+    <br />
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+
+
+
